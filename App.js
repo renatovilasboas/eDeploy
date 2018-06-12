@@ -6,9 +6,20 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { BottomNavigation, Appbar } from 'react-native-paper';
+import styled from 'styled-components';
 import TextPower from './components/TextPower';
 import urlRequest from './utils/UrlRequest';
-import { Button } from 'react-native-paper';
+import PostsScreen from './screens/posts';
+import Screen2 from './screens/screen2';
+import Screen3 from './screens/screen3';
+
+const Cabecalho = styled.View`
+  background-color: #3498db;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -16,6 +27,27 @@ export default class App extends Component<Props> {
     super();
     this.state = {
       posts: [],
+      index: 0,
+      routes: [
+        {
+          key: 'music',
+          title: 'Music',
+          icon: 'queue-music',
+          color: '#bdc3c7',
+        },
+        {
+          key: 'albums',
+          title: 'Albums',
+          icon: 'album',
+          color: '#bdc3c7',
+        },
+        {
+          key: 'recents',
+          title: 'Recents',
+          icon: 'history',
+          color: '#bdc3c7',
+        },
+      ],
     };
   }
 
@@ -26,36 +58,43 @@ export default class App extends Component<Props> {
     });
   }
 
+  handleIndexChange = (index) => this.setState({ index });
+
+  handleGoBack = () => this.setState({ index: index - 1 });
+
+  renderScene = BottomNavigation.SceneMap({
+    music: PostsScreen,
+    albums: Screen2,
+    recents: Screen3,
+  });
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.topBar}>
-          <Text>Titulo</Text>
-          <Button raised onPress={() => console.log('Pressed')}>
-            Press me
-          </Button>
-        </View>
+        <Appbar style={{ display: 'flex', justifyContent: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 14 }}>TITULO</Text>
+        </Appbar>
 
-        <View style={styles.fundo}>
-          <FlatList
-            data={this.state.posts}
-            keyExtractor={(item) => `txtPwd_${item.id.toString()}`}
-            renderItem={({ item }) => (
-              <TextPower style={styles.textPower} post={item} />
-            )}
-          />
-        </View>
-
-        <View style={styles.bottomBar}>
-          <Text style={styles.text1}>1</Text>
-          <Text style={styles.text2}>2</Text>
-          <Text style={styles.text3}>3</Text>
-        </View>
+        <BottomNavigation
+          style={{ flex: 1 }}
+          navigationState={this.state}
+          onIndexChange={this.handleIndexChange}
+          renderScene={this.renderScene}
+        />
       </View>
     );
   }
 }
 
+/* <View style={styles.container}>
+        <BottomNavigation
+          style={{ flex: 1 }}
+          navigationState={this.state}
+          onIndexChange={this.handleIndexChange}
+          renderScene={this.renderScene}
+        />
+      </View>
+       */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
