@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import TextPower from './components/TextPower';
 import urlRequest from './utils/UrlRequest';
+import { Button } from 'react-native-paper';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -30,6 +31,9 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <View style={styles.topBar}>
           <Text>Titulo</Text>
+          <Button raised onPress={() => console.log('Pressed')}>
+            Press me
+          </Button>
         </View>
 
         <View style={styles.fundo}>
