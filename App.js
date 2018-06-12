@@ -5,21 +5,27 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import TextPower from './components/TextPower';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import urlRequest from './utils/UrlRequest';
 
 type Props = {};
 export default class App extends Component<Props> {
-  render() {
-    const myObject = { comment: 'meu comentário', subtitulo: 'subtitulo' };
+  constructor() {
+    super();
+    this.state = {
+      posts: [],
+    };
+  }
 
+  async componentDidMount() {
+    const posts = await urlRequest('https://jsonplaceholder.typicode.com/posts');
+    this.setState({
+      posts,
+    });
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.topBar}>
@@ -27,7 +33,13 @@ export default class App extends Component<Props> {
         </View>
 
         <View style={styles.fundo}>
-          <TextPower style={styles.textPower} titulo="TITULO" post={myObject} />
+          <FlatList
+            data={this.state.posts}
+            keyExtractor={(item) => `txtPwd_${item.id.toString()}`}
+            renderItem={({ item }) => (
+              <TextPower style={styles.textPower} post={item} />
+            )}
+          />
         </View>
 
         <View style={styles.bottomBar}>

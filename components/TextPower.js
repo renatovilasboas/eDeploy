@@ -1,19 +1,23 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableHighlight, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 const TextPower = (props) => (
-  <Text style={props.style}>
-    {`${props.titulo} - ${props.post.comment} ${props.post.subtitulo}`}
-  </Text>
+  <TouchableHighlight>
+    <View>
+      <Text style={props.style}> {props.post.title}</Text>
+      <Text style={props.style}> {props.post.body}</Text>
+    </View>
+  </TouchableHighlight>
 );
 
 TextPower.propTypes = {
   style: PropTypes.number,
-  titulo: PropTypes.string.isRequired,
   post: PropTypes.shape({
-    comment: PropTypes.string.isRequired,
-    subtitulo: PropTypes.string.isRequired,
+    userId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
   }),
 };
 
