@@ -5,12 +5,23 @@
  */
 
 import { createStackNavigator } from 'react-navigation';
-import Menu from './screens/menu';
+import { DefaultTheme } from 'react-native-paper';
+import Main from './screens/main';
 
 export default createStackNavigator(
   {
     Home: {
-      screen: Menu,
+      screen: Main,
+      navigationOptions: {
+        title: 'Posts',
+        headerStyle: {
+          backgroundColor: DefaultTheme.colors.primary,
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
     },
   },
   {

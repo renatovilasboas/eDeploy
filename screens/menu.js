@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { BottomNavigation } from 'react-native-paper';
-import { routes, renderScene } from './routes';
-import Screen2 from '../screens/screen2';
-import Screen3 from '../screens/screen3';
-import ContainerPosts from '../screens/ContainerPosts';
+import { withTheme, BottomNavigation } from 'react-native-paper';
+import { routes, renderScene } from './MenuRoutes';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,49 +11,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Menu extends Component {
-  static navigationOptions = {
-    title: 'Posts',
-    headerStyle: {
-      backgroundColor: '#f4511e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
-
+class Menu extends Component {
   constructor() {
     super();
+    /* eslint-disable*/
     this.state = {
       index: 0,
-      routes: [
-        {
-          key: 'music',
-          title: 'Music',
-          icon: 'queue-music',
-        },
-        {
-          key: 'albums',
-          title: 'Albums',
-          icon: 'album',
-        },
-        {
-          key: 'recents',
-          title: 'Recents',
-          icon: 'history',
-        },
-      ],
+      routes: [...routes.routes],
     };
   }
 
+  /* eslint-disable-next-line */
   handleIndexChange = (index) => this.setState({ index });
-
-  renderScene = BottomNavigation.SceneMap({
-    music: ContainerPosts,
-    albums: Screen2,
-    recents: Screen3,
-  });
 
   render() {
     return (
@@ -71,3 +37,5 @@ export default class Menu extends Component {
     );
   }
 }
+
+export default Menu;
