@@ -1,7 +1,7 @@
 import { BottomNavigation } from 'react-native-paper';
-import Screen2 from '../screens/screen2';
-import Screen3 from '../screens/screen3';
-import ContainerPosts from '../screens/ContainerPosts';
+import Screen2 from '../screen2';
+import Screen3 from '../screen3';
+import ContainerPosts from '../Posts/ContainerPosts';
 
 const routes = {
   routes: [

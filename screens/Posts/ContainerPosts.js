@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import urlRequest from '../utils/UrlRequest';
+import urlRequest from '../../utils/UrlRequest';
 import PostsScreen from './PostsScreen';
 
 export default class ContainerPosts extends Component {

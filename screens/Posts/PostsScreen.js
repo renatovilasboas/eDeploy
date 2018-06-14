@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, FlatList } from 'react-native';
-import TextPower from '../components/TextPower';
+import TextPower from '../../components/TextPower';
 
 const styles = StyleSheet.create({
   fundo: {

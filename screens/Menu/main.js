@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import Menu from '../screens/menu';
-
-const theme = {
-  ...DefaultTheme,
-};
+import { Provider as PaperProvider } from 'react-native-paper';
+import Menu from '../Menu/menu';
+import theme from '../Menu/theme';
 
 export default function Main() {
   return (
