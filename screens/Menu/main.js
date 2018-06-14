@@ -3,10 +3,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import Menu from '../Menu/menu';
 import theme from '../Menu/theme';
 
-export default function Main() {
+export default function Main(props) {
   return (
     <PaperProvider theme={theme}>
-      <Menu />
+      <Menu {...props} />
     </PaperProvider>
   );
 }

@@ -25,13 +25,14 @@ class Menu extends Component {
   handleIndexChange = (index) => this.setState({ index });
 
   render() {
+    const scenes = renderScene(this.props);
     return (
       <View style={styles.container}>
         <BottomNavigation
           style={{ flex: 1 }}
           navigationState={this.state}
           onIndexChange={this.handleIndexChange}
-          renderScene={renderScene}
+          renderScene={scenes}
         />
       </View>
     );

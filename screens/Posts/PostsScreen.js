@@ -21,7 +21,14 @@ const Posts = (props) => (
       data={props.posts}
       keyExtractor={(item) => `txtPwd_${item.id.toString()}`}
       renderItem={({ item }) => (
-        <TextPower style={styles.textPower} post={item} />
+        <TextPower
+          {...props}
+          style={styles.textPower}
+          post={item}
+          handleClick={(post) =>
+            props.navigation.navigate('DetailPost', { post })
+          }
+        />
       )}
     />
   </View>
@@ -34,6 +41,7 @@ Posts.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   })),
+  navigation: PropTypes.object.isRequired,
 };
 
 export default Posts;
