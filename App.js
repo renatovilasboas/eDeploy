@@ -6,7 +6,7 @@
 
 import { createStackNavigator } from 'react-navigation';
 import { DefaultTheme } from 'react-native-paper';
-import Main from './screens/main';
+import Main from './screens/Menu/main';
 
 export default createStackNavigator(
   {
