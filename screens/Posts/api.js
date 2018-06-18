@@ -5,7 +5,7 @@ export const requestPosts = async () => {
     const posts = await urlRequest('https://jsonplaceholder.typicode.com/posts');
     return posts;
   } catch (error) {
-    throw new `Call api error ${error.message}`();
+    throw new `Call api Error ${error}`();
   }
 };
 
@@ -14,6 +14,6 @@ export const requestUsers = async () => {
     const users = await urlRequest('https://jsonplaceholder.typicode.com/users');
     return users;
   } catch (error) {
-    throw new `Call api error ${error.message}`();
+    throw new `Call api Error ${error}`();
   }
 };
