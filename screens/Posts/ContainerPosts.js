@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import urlRequest from '../../utils/UrlRequest';
 import PostsScreen from './PostsScreen';
+import { requestPosts, requestUsers } from './api';
 
 const photos = [
   {
@@ -61,8 +62,8 @@ export default class ContainerPosts extends Component {
   }
 
   async requestPosts() {
-    const posts = await urlRequest('https://jsonplaceholder.typicode.com/posts');
-    const users = await urlRequest('https://jsonplaceholder.typicode.com/users');
+    const posts = await requestPosts();
+    const users = await requestUsers();
     const postsToView = this.generatePostsToView(posts, users);
     return postsToView;
   }
