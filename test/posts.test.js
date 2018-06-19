@@ -10,6 +10,7 @@ describe('Posts tests', () => {
     // Arrange
     const initialState = {
       posts: [],
+      users: [],
     };
 
     const posts = [
@@ -44,6 +45,7 @@ describe('Posts tests', () => {
     const newState = reducer(initialState, action);
 
     // Assert
+    expect(newState.users.length).to.be.equal(0);
     expect(newState.posts.length).to.be.equal(3);
     posts.forEach((post, index) => {
       const postOfState = newState.posts[index];
