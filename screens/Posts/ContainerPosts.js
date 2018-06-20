@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import urlRequest from '../../utils/UrlRequest';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import PostsScreen from './PostsScreen';
 import { requestPosts, requestUsers } from './api';
+import { requestPostSuccess, requestUsersSuccess } from './actions';
 
 const photos = [
   {
@@ -48,47 +50,74 @@ const photos = [
   },
 ];
 
-export default class ContainerPosts extends Component {
+const generatePostsToView = (posts, users) => {
+  const postsToView = [];
+
+  posts.forEach((post) => {
+    const user = users.find((x) => x.id === post.userId);
+    const photoUser = photos.find((x) => x.id === post.userId);
+
+    postsToView.push({
+      id: post.id,
+      userId: post.userId,
+      name: user.name,
+      photo: photoUser.photo,
+      title: post.title,
+      body: post.body,
+    });
+  });
+
+  return postsToView;
+};
+
+class ContainerPosts extends Component {
   constructor() {
     super();
-    this.state = {
-      postsToView: [],
-    };
-
-    this.requestPosts().then((postsToView) =>
-      this.setState({
-        postsToView,
-      }));
+    this.requestPosts();
   }
 
   async requestPosts() {
     const posts = await requestPosts();
+    /* eslint-disable*/
+    const { requestPostSuccess, requestUsersSuccess } = this.props;
+
+    requestPostSuccess(posts);
+
     const users = await requestUsers();
-    const postsToView = this.generatePostsToView(posts, users);
-    return postsToView;
-  }
-
-  generatePostsToView(posts, users) {
-    const postsToView = [];
-
-    posts.forEach((post) => {
-      const user = users.find((x) => x.id === post.userId);
-      const photoUser = photos.find((x) => x.id === post.userId);
-
-      postsToView.push({
-        id: post.id,
-        userId: post.userId,
-        name: user.name,
-        photo: photoUser.photo,
-        title: post.title,
-        body: post.body,
-      });
-    });
-
-    return postsToView;
+    requestUsersSuccess(users);
   }
 
   render() {
-    return <PostsScreen {...this.props} posts={this.state.postsToView} />;
+    return <PostsScreen {...this.props} posts={this.props.postsToView} />;
   }
 }
+
+const mapStateToProps = (state) => ({
+  postsToView: generatePostsToView(
+    state.postsContainer.posts,
+    state.postsContainer.users
+  ),
+});
+
+const mapDispatchToProps = {
+  requestPostSuccess,
+  requestUsersSuccess,
+};
+
+ContainerPosts.propTypes = {
+  requestPostSuccess: PropTypes.func.isRequired,
+  requestUsersSuccess: PropTypes.func.isRequired,
+  postsToView: PropTypes.arrayOf(
+    PropTypes.shape({
+      userId: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+    })
+  ),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContainerPosts);
